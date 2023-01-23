@@ -3,4 +3,8 @@
 
 #include "libmx.h"
 
+#include <dirent.h>
+#include <errno.h>
+#include <stdio.h>
+
 #endif
