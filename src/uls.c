@@ -1,51 +1,25 @@
 #include "../inc/uls.h"
 
-void check_no_dir(char **argv) {
-	int dir_index = 1;
-	for (; argv[dir_index] != NULL; dir_index++) {	
-		char* dir = argv[dir_index];
-		DIR *dh = opendir(dir);
-		//FILE *f = acl_get_file();
-		if (!dh) {
-			mx_printerr(argv[0]);
+int check_dir(char *name, char* uls, DIR* dir) {
+	//FILE *f = acl_get_file();
+
+	if (errno != 0) {
+		if (errno == ENOTDIR) { 
+			errno = 0;
+			return 0;
+		}
+		else {
+			mx_printerr(uls);
 			mx_printerr(": ");
-			mx_printerr(argv[dir_index]);
+			mx_printerr(name);
 			mx_printerr(": No such file or directory\n");
-			exit(-1);
+			closedir(dir);
+			errno = 0;
+			return -1;
 		}
 	}
+	return 1;
 }
-
-void check_dir(char **argv) {
-	int dir_index = 1;
-	for (; argv[dir_index] != NULL; dir_index++) {	
-		char* dir = argv[dir_index];
-		DIR *dh = opendir(dir);
-		
-		struct dirent *entry = NULL;
-		while (entry == readdir(dh))
-		{
-			mx_printstr(entry->d_name);
-			mx_printstr(" ");
-		}
-		
-	}
-}
-
-/*void add_cat(char **argv) {
-		mx_printstr(argv[1]);
-	if (argv[1] != NULL && mx_strcmp(argv[1], "| cat -e")) {
-
-		//mx_printstr("fhsd");
-		int dir_index = 1;
-		for (; argv[dir_index] != NULL; dir_index++) {	
-			char* dir = argv[dir_index];
-			mx_printstr(dir);
-			mx_printstr("\n");
-		}
-	}
-
-}*/
 
 void uls(const char *dir,int op_a,int op_l)
 {
@@ -97,6 +71,8 @@ void uls(const char *dir,int op_a,int op_l)
 		mx_printstr(array[i]);
 		mx_printstr("  ");
 	}
+
+	mx_printint(count);
 
 	if(!op_l)
 	mx_printstr("\n");

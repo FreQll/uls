@@ -14,8 +14,6 @@
 void check_no_dir(char **argv);
 void uls(const char *dir, int op_a, int op_l);
 void add_cat(char **argv);
-void check_dir(char **argv);
-
-bool compare_name(void *a, void *b);
+int check_dir(char *name, char* uls, DIR* dir);
 
 #endif
