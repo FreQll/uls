@@ -1,16 +1,36 @@
 #include "../inc/uls.h"
 
 int main(int argc, char **argv) {
-    if (argc == 1)
-	{
+    if (argc == 1) {
 		uls(".", 0, 0);
 	}
-	/*else if (argc == 2)
-	{*/
-		check_no_dir(argv);
+	for (int i = 1; argv[i] != NULL; i++) {	
+		
+		DIR *dir = opendir(argv[i]);
+		int check = check_dir(argv[i], argv[0], dir);
+		if (check == -1) continue;
+		if (check == 0) {
+			mx_printstr(argv[i]);
+			mx_printstr("\n");
+		}
+		else {
+			struct dirent *entry;
+
+			mx_printstr("\n");
+			mx_printstr(argv[i]);
+			mx_printstr(":\n");
+			while ((entry = readdir(dir)) != NULL)
+			{
+				mx_printstr(entry->d_name);
+				mx_printstr(" ");
+			}
+			mx_printstr("\n");
+		}
+		closedir(dir);
+	}
+
 		//add_cat(argv);
 		
-		check_dir(argv);
 		
 
 

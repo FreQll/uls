@@ -1,35 +1,24 @@
 #include "../inc/uls.h"
 
-void check_no_dir(char **argv) {
-	int dir_index = 1;
-	for (; argv[dir_index] != NULL; dir_index++) {	
-		char* dir = argv[dir_index];
-		DIR *dh = opendir(dir);
-		//FILE *f = acl_get_file();
-		if (!dh) {
-			mx_printerr(argv[0]);
-			mx_printerr(": ");
-			mx_printerr(argv[dir_index]);
-			mx_printerr(": No such file or directory\n");
-			exit(-1);
-		}
-	}
-}
+int check_dir(char *name, char* uls, DIR* dir) {
+	//FILE *f = acl_get_file();
 
-void check_dir(char **argv) {
-	int dir_index = 1;
-	for (; argv[dir_index] != NULL; dir_index++) {	
-		char* dir = argv[dir_index];
-		DIR *dh = opendir(dir);
-		
-		struct dirent *entry;
-		while (entry = readdir(dh))
-		{
-			mx_printstr(entry->d_name);
-			mx_printstr(" ");
+	if (errno != 0) {
+		if (errno == ENOTDIR) { 
+			errno = 0;
+			return 0;
 		}
-		
+		else {
+			mx_printerr(uls);
+			mx_printerr(": ");
+			mx_printerr(name);
+			mx_printerr(": No such file or directory\n");
+			closedir(dir);
+			errno = 0;
+			return -1;
+		}
 	}
+	return 1;
 }
 
 /*void add_cat(char **argv) {
