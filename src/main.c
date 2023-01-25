@@ -3,12 +3,22 @@
 int main(int argc, char **argv) {
     if (argc == 1)
 	{
-		uls(".",0,0);
+		uls(".", 0, 0);
 	}
-	else if (argc == 2)
-	{
+	/*else if (argc == 2)
+	{*/
+		check_no_dir(argv);
+		//add_cat(argv);
+		
+		check_dir(argv);
+		
+
+
+		//CREATIVE
+		/*
 		if (argv[1][0] == '-')
 		{
+
 			//Checking if option is passed
 			//Options supporting: a, l
 			int op_a = 0, op_l = 0;
@@ -23,7 +33,9 @@ int main(int argc, char **argv) {
 				p++;
 			}
 			uls(".",op_a,op_l);
-		}
-	}
+			
+		}*/
+	
+	//}
 	return 0;
 }

@@ -14,7 +14,7 @@ LMX_DIR	= libmx
 LMX_A:=	$(LMX_DIR)/libmx.a
 LMX_INC:= $(LMX_DIR)/inc
 
-all: install
+all: clean install 
 
 install: $(LMX_A) $(NAME)
 
@@ -34,6 +34,7 @@ $(LMX_A):
 	
 clean:
 	@rm -rf $(OBJ_DIR)
+	@rm -rf $(NAME)
 
 uninstall:
 	@make -sC $(LMX_DIR) $@
