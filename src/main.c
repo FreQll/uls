@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
 			}
 			mx_printstr("\n");
 		}
+			errno = 0;
 		closedir(dir);
 	}
 

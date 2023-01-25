@@ -5,7 +5,6 @@ int check_dir(char *name, char* uls, DIR* dir) {
 
 	if (errno != 0) {
 		if (errno == ENOTDIR) { 
-			errno = 0;
 			return 0;
 		}
 		else {
@@ -66,4 +65,5 @@ void uls(const char *dir,int op_a,int op_l)
 	}
 	if(!op_l)
 	printf("\n");
+	closedir(dh);
 }
