@@ -1,22 +1,15 @@
 #include "../inc/uls.h"
 
-int check_dir(char *name, char* uls, DIR* dir) {
-	//FILE *f = acl_get_file();
-
+int check_dir() {
 	if (errno != 0) {
 		if (errno == ENOTDIR) { 
 			return 0;
 		}
 		else {
-			mx_printerr(uls);
-			mx_printerr(": ");
-			mx_printerr(name);
-			mx_printerr(": No such file or directory\n");
-			closedir(dir);
-			errno = 0;
 			return -1;
 		}
 	}
+	errno = 0;
 	return 1;
 }
 

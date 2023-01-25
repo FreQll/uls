@@ -4,31 +4,40 @@ int main(int argc, char **argv) {
     if (argc == 1) {
 		uls(".", 0, 0);
 	}
+
+	t_list *incorrect_values = NULL;
 	for (int i = 1; argv[i] != NULL; i++) {	
 		
+		errno = 0;
 		DIR *dir = opendir(argv[i]);
-		int check = check_dir(argv[i], argv[0], dir);
-		if (check == -1) continue;
-		if (check == 0) {
+		int check = check_dir(argv[i]);
+		if (check == -1) {
+			mx_push_back(&incorrect_values, argv[i]);
+		}
+		else if (check == 0) {
 			mx_printstr(argv[i]);
 			mx_printstr("\n");
 		}
 		else {
 			struct dirent *entry;
-
-			mx_printstr("\n");
+			//
+			if (i != 1) mx_printstr("\n");
 			mx_printstr(argv[i]);
 			mx_printstr(":\n");
 			while ((entry = readdir(dir)) != NULL)
 			{
+				if (entry->d_name[0] == '.')
+					continue;
 				mx_printstr(entry->d_name);
 				mx_printstr(" ");
 			}
 			mx_printstr("\n");
 		}
-			errno = 0;
 		closedir(dir);
 	}
+	
+	mx_printstr("\n");
+	mx_print_incorrect(incorrect_values);
 
 		//add_cat(argv);
 		
