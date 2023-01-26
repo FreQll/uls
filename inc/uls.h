@@ -14,8 +14,10 @@
 void check_no_dir(char **argv);
 void uls(const char *dir, int op_a, int op_l);
 void add_cat(char **argv);
-int check_dir(char *name, char* uls, DIR* dir);
+int check_dir();
+void mx_print_list(t_list *list);
+void mx_print_incorrect(t_list *list);
 
-bool compare_names(void *a, void *b);
+void sort_alpha(t_list *lst);
 
 #endif
