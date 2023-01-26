@@ -6,38 +6,67 @@ int main(int argc, char **argv) {
 	}
 
 	t_list *incorrect_values = NULL;
+	t_list *list_files = NULL;
+	t_dir list_dir[argc - 1];
+
+	for (int i = 0; i < argc - 1; i++)
+	{
+		list_dir[i].list = NULL;
+	}
+	
+	
+	
+	int temp = 0;
+
 	for (int i = 1; argv[i] != NULL; i++) {	
 		
+		char *name = argv[i];
 		errno = 0;
-		DIR *dir = opendir(argv[i]);
-		int check = check_dir(argv[i]);
+		DIR *dir = opendir(name);
+		int check = check_dir(name);
 		if (check == -1) {
-			mx_push_back(&incorrect_values, argv[i]);
+			mx_push_back(&incorrect_values, name);
 		}
 		else if (check == 0) {
-			mx_printstr(argv[i]);
-			mx_printstr("\n");
+			mx_push_back(&list_files, name);
 		}
 		else {
 			struct dirent *entry;
-			//
-			if (i != 1) mx_printstr("\n");
-			mx_printstr(argv[i]);
-			mx_printstr(":\n");
-			while ((entry = readdir(dir)) != NULL)
-			{
+			list_dir[temp].data = name;
+
+			while ((entry = readdir(dir)) != NULL) {
 				if (entry->d_name[0] == '.')
 					continue;
-				mx_printstr(entry->d_name);
-				mx_printstr(" ");
+
+				char *t = mx_strdup(entry->d_name);
+				mx_push_back(&list_dir[temp].list, t);
 			}
-			mx_printstr("\n");
+
+			closedir(dir);
+			temp++;
 		}
-		closedir(dir);
 	}
 	
-	mx_printstr("\n");
+	//////вывод
 	mx_print_incorrect(incorrect_values);
+	mx_printstr("\n");
+	mx_print_list(list_files);
+	mx_printstr("\n");
+
+	for (int i = 0; i < argc - 1; i++) {
+		if (list_dir[i].list != NULL) {
+			if (i != 0) mx_printstr("\n");
+			mx_printstr(list_dir[i].data);
+			mx_printstr(":\n");
+			mx_print_list(list_dir[i].list);
+		}
+	}
+
+	//////очистка
+	mx_clear_list(&incorrect_values, false);
+	mx_clear_list(&list_files, false);
+	for (int i = 0; i < argc - 1; i++)
+		mx_clear_list(&list_dir[i].list, true);
 
 		//add_cat(argv);
 		

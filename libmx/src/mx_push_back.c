@@ -1,18 +1,16 @@
 #include "../inc/libmx.h"
 
 void mx_push_back(t_list **list, void *data) {
-    t_list *new_node = (t_list*) malloc (sizeof(t_list));
-    t_list *last = *list;
-
-    new_node->data = data;
-    new_node->next = NULL;
+    if (!data) return;
 
     if (*list == NULL) {
-        *list = new_node;
+        *list = mx_create_node(data); 
         return;
     }
 
-    while (last->next != NULL) last = last->next;
-    last->next = new_node;
-    return;
+    t_list* temp = *list;
+    for (; temp->next != NULL; temp = temp -> next);
+
+    temp->next = mx_create_node(data);
 }
+
