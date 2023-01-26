@@ -42,16 +42,29 @@ void uls(const char *dir,int op_a,int op_l)
 		exit(EXIT_FAILURE);
 	}
 	//While the next entry is not readable we will print directory files
+	t_list *list;
 	while ((d = readdir(dh)) != NULL)
 	{
 		//If hidden files are found we continue
 		if (!op_a && d->d_name[0] == '.')
 			continue;
+		mx_push_front(&list, d->d_name);
 		//mx_printstr(d->d_name);
 		count++;
+		
 		//mx_printstr("\t");
 		//if(op_l) mx_printstr("\n");
 	}
+	
+	// while (list != NULL)
+	// {
+	// 	mx_printstr(list->data);
+	// 	mx_printchar('\n');
+	// 	list = list->next;
+	// }
+	mx_printchar('\n');
+	//mx_printint(mx_list_size(list));
+	//mx_printchar('\n');
 	char **array = malloc(sizeof(char*));
 	for (int i = 0; i < count; i++) {
 		array[i] = mx_strnew(sizeof(char*));
@@ -66,6 +79,14 @@ void uls(const char *dir,int op_a,int op_l)
 		array[temp] = d->d_name;
 		temp++;
 	}
+	
+	mx_sort_list(list, compare_names);
+	while (list != NULL)
+	{
+		mx_printstr(list->data);
+		mx_printchar('\n');
+		list = list->next;
+	}
 	mx_bubble_sort(array, count);
 	for (int i = 0; i < count; i++) {
 		mx_printstr(array[i]);
@@ -76,4 +97,27 @@ void uls(const char *dir,int op_a,int op_l)
 
 	if(!op_l)
 	mx_printstr("\n");
+}
+
+bool compare_names(void *a, void *b) {
+	char *aTmp = mx_strnew(mx_strlen(((t_list *)a)->data));
+    char *bTmp = mx_strnew(mx_strlen(((t_list *)b)->data));
+    mx_strcpy(a, ((t_list *)a)->data);
+    mx_strcpy(a, ((t_list *)b)->data);
+	
+	for (int i = 0; aTmp[i] != '\0' ; ++i) {
+        aTmp[i] = mx_tolower(aTmp[i]);
+    }
+    for (int i = 0; bTmp[i] != '\0' ; ++i) {
+        bTmp[i] = mx_tolower(aTmp[i]);
+    }
+
+	mx_printstr(aTmp);
+	mx_printstr(" -> ");
+	mx_printstr(bTmp);
+
+	bool flag = mx_strcmp(aTmp, bTmp) == 0;
+    free(aTmp);
+    free(bTmp);
+    return flag;
 }

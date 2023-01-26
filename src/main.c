@@ -18,7 +18,6 @@ int main(int argc, char **argv) {
 
 			//
 			if (i != 1) mx_printstr("\n");
-			mx_printint(i);
 			mx_printstr(argv[i]);
 			mx_printstr(":\n");
 			while ((entry = readdir(dir)) != NULL)
