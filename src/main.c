@@ -3,6 +3,7 @@
 int main(int argc, char **argv) {
     if (argc == 1) {
 		uls(".", 0, 0);
+		return 0;
 	}
 
 	t_list *incorrect_values = NULL;

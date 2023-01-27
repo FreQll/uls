@@ -6,7 +6,7 @@ void mx_print_list(t_list *list) {
     t_list *temp = list;
     while (temp) {
         mx_printstr(temp->data);
-        mx_printchar(' ');
+        mx_printchar('\t');
         temp = temp->next;
     }
     mx_printchar('\n');
