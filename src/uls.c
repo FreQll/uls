@@ -28,6 +28,7 @@ int check_dir() {
 
 }*/
 
+
 void uls(const char *dir,int op_a,int op_l)
 {
 	//Here we will list the directory
@@ -47,16 +48,38 @@ void uls(const char *dir,int op_a,int op_l)
 		}
 		exit(EXIT_FAILURE);
 	}
+	t_list *list;
 	//While the next entry is not readable we will print directory files
 	while ((d = readdir(dh)) != NULL)
 	{
 		//If hidden files are found we continue
 		if (!op_a && d->d_name[0] == '.')
 			continue;
-		printf("%s  ", d->d_name);
-		if(op_l) printf("\n");
+		//mx_printstr(d->d_name);
+		//mx_printstr("  ");
+		mx_push_front(&list, d->d_name);
+		//if(op_l) printf("\n");
 	}
+	//mx_print_list(list);
+	sort_alpha(list);
+	mx_print_list(list);
 	if(!op_l)
 	printf("\n");
 	closedir(dh);
 }
+
+void sort_alpha(t_list *lst)
+{
+	if (lst) {
+        for (t_list *temp1 = lst; temp1; temp1 = temp1->next){
+			for (t_list *temp2 = lst; temp2->next; temp2 = temp2->next) {
+				if (mx_strcasecmp(temp2->data, temp2->next->data) > 0) {
+					void *temp = temp2->data;
+					temp2->data = temp2->next->data;
+					temp2->next->data = temp;
+				} 
+			}
+		}
+    }
+}
+

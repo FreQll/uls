@@ -16,7 +16,6 @@ int main(int argc, char **argv) {
 	}
 	
 	
-	
 	int temp = 0;
 
 	for (int i = 1; argv[i] != NULL; i++) {	
@@ -71,8 +70,6 @@ int main(int argc, char **argv) {
 
 		//add_cat(argv);
 		
-		
-
 
 		//CREATIVE
 		/*
