@@ -3,17 +3,31 @@
 int main(int argc, char **argv) {
     if (argc == 1) {
 		uls(".", 0, 0);
+		return 0;
 	}
 
-	t_list *incorrect_values = NULL;
+	// t_list *incorrect_values = NULL;
 
-	t_list *files = NULL;
-	//t_list *dir_names = NULL;
-	//t_list *file_names = NULL;
-	//t_list **directories = NULL;
+	// t_list *files = NULL;
+	// //t_directories dirs[argc - 1];	
+	// //t_list *dir_names = NULL;
+	// //t_list *file_names = NULL;
+	// //t_list **directories = NULL;
+
+	t_list *incorrect_values = NULL;
+	t_list *list_files = NULL;
+	t_dir list_dir[argc - 1];
+
+	for (int i = 0; i < argc - 1; i++)
+	{
+		list_dir[i].list = NULL;
+	}
+
+	int temp = 0;
 
 	for (int i = 1; argv[i] != NULL; i++) {	
-		
+			
+		char *name = argv[i];
 		errno = 0;
 		DIR *dir = opendir(argv[i]);
 		int check = check_dir(argv[i]);
@@ -21,37 +35,52 @@ int main(int argc, char **argv) {
 			mx_push_back(&incorrect_values, argv[i]);
 		}
 		else if (check == 0) { //files
-			mx_push_front(&files, argv[i]);
+			mx_push_back(&list_files, name);
 			//mx_printstr(argv[i]);
 			//mx_printstr("\n");
 		}
 		else { //for dirs
 			struct dirent *entry;
+			list_dir[temp].data = name;
 			//
 			if (i != 1) mx_printstr("\n");
 
 			//mx_push_front(&dir_names, argv[i]);
 
-			mx_printstr(argv[i]);
-			mx_printstr(":\n");
-			while ((entry = readdir(dir)) != NULL)
-			{
+			while ((entry = readdir(dir)) != NULL) {
 				if (entry->d_name[0] == '.')
 					continue;
-				//mx_push_front(&file_names, entry->d_name);
-				mx_printstr(entry->d_name);
-				mx_printstr("  ");
+
+				char *t = mx_strdup(entry->d_name);
+				mx_push_back(&list_dir[temp].list, t);
 			}
-			mx_printstr("\n");
+
+			closedir(dir);
+			temp++;
 		}
-		closedir(dir);
 	}
 
-	sort_alpha(files);
-	mx_print_list(files);
+	sort_alpha(list_files);
 	
-	mx_printstr("\n");
 	mx_print_incorrect(incorrect_values);
+	mx_printstr("\n");
+	mx_print_list(list_files);
+	mx_printstr("\n");
+	
+	for (int i = 0; i < argc - 1; i++) {
+		if (list_dir[i].list != NULL) {
+			if (i != 0) mx_printstr("\n");
+			mx_printstr(list_dir[i].data);
+			mx_printstr(":\n");
+			mx_print_list(list_dir[i].list);
+		}
+	}
+
+	//////очистка
+	mx_clear_list(&incorrect_values, false);
+	mx_clear_list(&list_files, false);
+	for (int i = 0; i < argc - 1; i++)
+		mx_clear_list(&list_dir[i].list, true);
 
 		//add_cat(argv);
 		

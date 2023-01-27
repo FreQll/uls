@@ -9,6 +9,7 @@ void mx_print_list(t_list *list) {
         mx_printstr("  ");
         temp = temp->next;
     }
+    mx_printchar('\n');
 }
 
 void mx_print_incorrect(t_list *list) {
@@ -21,5 +22,16 @@ void mx_print_incorrect(t_list *list) {
         mx_printerr(": No such file or directory\n");
         temp = temp->next;
     }
+}
+
+void mx_clear_list(t_list** list, bool is_clear) {
+    if (!(*list)) return;
+
+	while (*list){
+		t_list *node = (*list)->next;
+		if (is_clear) free((*list)->data);
+		free(*list);
+		*list = node;
+	}
 }
 
