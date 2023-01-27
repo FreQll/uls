@@ -54,7 +54,7 @@ void uls(const char *dir,int op_a,int op_l)
 	sort_alpha(list);
 	mx_print_list(list);
 	if(!op_l)
-	printf("\n");
+		mx_printchar('\n');
 	closedir(dh);
 }
 

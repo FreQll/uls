@@ -6,10 +6,12 @@ void mx_print_list(t_list *list) {
     t_list *temp = list;
     while (temp) {
         mx_printstr(temp->data);
-        mx_printstr("  ");
+        if (temp->next != NULL) {
+            mx_printstr("  ");
+        }
         temp = temp->next;
     }
-    mx_printchar('\n');
+    //mx_printchar('\n');
 }
 
 void mx_print_incorrect(t_list *list) {
