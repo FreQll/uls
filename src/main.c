@@ -6,14 +6,6 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	// t_list *incorrect_values = NULL;
-
-	// t_list *files = NULL;
-	// //t_directories dirs[argc - 1];	
-	// //t_list *dir_names = NULL;
-	// //t_list *file_names = NULL;
-	// //t_list **directories = NULL;
-
 	t_list *incorrect_values = NULL;
 	t_list *list_files = NULL;
 	t_dir list_dir[argc - 1];
@@ -36,16 +28,12 @@ int main(int argc, char **argv) {
 		}
 		else if (check == 0) { //files
 			mx_push_back(&list_files, name);
-			//mx_printstr(argv[i]);
-			//mx_printstr("\n");
 		}
 		else { //for dirs
 			struct dirent *entry;
 			list_dir[temp].data = name;
 			//
 			if (i != 1) mx_printstr("\n");
-
-			//mx_push_front(&dir_names, argv[i]);
 
 			while ((entry = readdir(dir)) != NULL) {
 				if (entry->d_name[0] == '.')
@@ -72,6 +60,7 @@ int main(int argc, char **argv) {
 			if (i != 0) mx_printstr("\n");
 			mx_printstr(list_dir[i].data);
 			mx_printstr(":\n");
+			sort_alpha(list_dir[i].list);
 			mx_print_list(list_dir[i].list);
 		}
 	}
