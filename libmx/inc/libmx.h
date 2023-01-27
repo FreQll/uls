@@ -84,5 +84,6 @@ void mx_printerr(const char *s);
 bool mx_isdigit(int c);
 bool mx_isalpha(int c);
 int mx_atoi(const char *str);
+int mx_strcasecmp(const char *s1, const char *s2);
 
 #endif
