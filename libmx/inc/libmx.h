@@ -85,5 +85,6 @@ bool mx_isdigit(int c);
 bool mx_isalpha(int c);
 int mx_atoi(const char *str);
 int mx_strcasecmp(const char *s1, const char *s2);
+int mx_tolower(int c);
 
 #endif

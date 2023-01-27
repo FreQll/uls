@@ -48,7 +48,7 @@ void uls(const char *dir,int op_a,int op_l)
 		}
 		exit(EXIT_FAILURE);
 	}
-	t_list *list;
+	t_list *list = NULL;
 	//While the next entry is not readable we will print directory files
 	while ((d = readdir(dh)) != NULL)
 	{
