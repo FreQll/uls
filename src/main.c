@@ -6,6 +6,10 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
+	// for (int i = 1; i < argc; i++) {
+	// 	mx_printstr(argv[i]);
+	// }
+
 	t_list *incorrect_values = NULL;
 	t_list *list_files = NULL;
 	t_dir list_dir[argc - 1];
@@ -18,6 +22,7 @@ int main(int argc, char **argv) {
 	int temp = 0;
 	int incorrect_count = 0;
 	int file_count = 0;
+	int dir_count = 0;
 
 	for (int i = 1; argv[i] != NULL; i++) {	
 			
@@ -37,7 +42,7 @@ int main(int argc, char **argv) {
 			struct dirent *entry;
 			list_dir[temp].data = name;
 			//
-			if (i != 1) mx_printstr("\n");
+			//if (i != 1) mx_printstr("\n");
 
 			while ((entry = readdir(dir)) != NULL) {
 				if (entry->d_name[0] == '.')
@@ -49,6 +54,7 @@ int main(int argc, char **argv) {
 
 			closedir(dir);
 			temp++;
+			dir_count++;
 		}
 	}
 
@@ -63,10 +69,13 @@ int main(int argc, char **argv) {
 	}
 
 	t_dir dir_temp;
-	for (int i = 0; i < argc -1; i++) {
-		for (int j = 0; j < argc - 2; j++) {
-            if(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
-				//mx_printstr(list_dir[j].data);
+	for (int i = 0; i < dir_count; i++) {
+		for (int j = 0; j < dir_count - 1; j++) {
+            if(mx_strcmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
+				// mx_printstr(list_dir[j].data);
+				// mx_printstr(" -> ");
+				// mx_printstr(list_dir[j + 1].data);
+				// mx_printstr("\n\n");
                 dir_temp.data = list_dir[j].data;
 				dir_temp.list = list_dir[j].list;
                 list_dir[j] = list_dir[j + 1];
