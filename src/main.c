@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 	}
 
 	// for (int i = 1; i < argc; i++) {
-	// 	mx_printstr(argv[i]);
+	// 	if (a)
 	// }
 
 	t_list *incorrect_values = NULL;
@@ -71,11 +71,22 @@ int main(int argc, char **argv) {
 	t_dir dir_temp;
 	for (int i = 0; i < dir_count; i++) {
 		for (int j = 0; j < dir_count - 1; j++) {
-            if(mx_strcmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
-				// mx_printstr(list_dir[j].data);
-				// mx_printstr(" -> ");
-				// mx_printstr(list_dir[j + 1].data);
-				// mx_printstr("\n\n");
+			if (mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) == 0 
+				&& mx_strcmp(list_dir[j].data, list_dir[j + 1].data) < 0) {
+					dir_temp.data = list_dir[j].data;
+					dir_temp.list = list_dir[j].list;
+					list_dir[j] = list_dir[j + 1];
+					list_dir[j + 1] = dir_temp;
+					continue;
+			}
+			// mx_printstr(list_dir[j].data);
+			// 	mx_printstr(" -> ");
+			// 	mx_printstr(list_dir[j + 1].data);
+			// 	mx_printchar('\t');
+			// 	mx_printint(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data));
+			// 	mx_printstr("\n\n");
+            if(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
+				//mx_printstr("\t swap\n\n");
                 dir_temp.data = list_dir[j].data;
 				dir_temp.list = list_dir[j].list;
                 list_dir[j] = list_dir[j + 1];
