@@ -6,9 +6,17 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	// for (int i = 1; i < argc; i++) {
-	// 	if (a)
-	// }
+	for (int i = 1; i < argc; i++) {
+		if (argv[i][0] == '-' && argv[i][1] == 'l') {
+			//_l_func(argv);
+		}
+		else if (argv[i][0] == '-' && argv[i][1] != 'l') {
+			mx_printerr("uls: illegal option -- ");
+			mx_printerr(&argv[i][1]);
+			mx_printerr("\nusage: uls [-l] [file ...]\n");
+			exit(0);
+		}
+	}
 
 	t_list *incorrect_values = NULL;
 	t_list *list_files = NULL;

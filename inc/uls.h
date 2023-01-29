@@ -6,6 +6,8 @@
 #include <dirent.h>
 #include <errno.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 //#include <sys/types.h>
 //include <sys/acl.h>
 
@@ -20,6 +22,7 @@ void mx_clear_list(t_list** list, bool is_clear);
 void mx_print_incorrect(t_list *list);
 
 void sort_alpha(t_list *lst);
+void _l_func(char **argv);
 
 typedef struct s_dir {
     void *data;
