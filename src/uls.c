@@ -55,7 +55,7 @@ void uls(const char *dir,int op_a,int op_l)
 	///////////////
 	if (op_l) {
 		_l_func(list);
-		exit(0);
+		//exit(0);
 	}
 
 	mx_print_list(list);

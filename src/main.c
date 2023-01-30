@@ -6,8 +6,13 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
+	int flag = 0;
+
 	for (int i = 1; i < argc; i++) {
 		if (argv[i][0] == '-' && argv[i][1] == 'l') {
+			flag = i;
+		}
+		if (argv[i][0] == '-' && argv[i][1] == 'l' && argc == 2) {
 			//_l_func(argv);
 			uls(".", 0, 1);
 		}
@@ -40,8 +45,10 @@ int main(int argc, char **argv) {
 		DIR *dir = opendir(argv[i]);
 		int check = check_dir(argv[i]);
 		if (check == -1) {
-			mx_push_back(&incorrect_values, argv[i]);
-			incorrect_count++;
+			if (i != flag) {
+				mx_push_back(&incorrect_values, argv[i]);
+				incorrect_count++;
+			}
 		}
 		else if (check == 0) { //files
 			mx_push_back(&list_files, name);

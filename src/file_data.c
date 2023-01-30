@@ -105,7 +105,7 @@ void print_file_size(char *name) {
 void print_file_time(char *name) {
     struct stat fileStat;
 	stat(name, &fileStat);
-    mx_printstr(convert_time(fileStat.st_atime));
+    mx_printstr(convert_time(fileStat.st_ctime));
     //mx_printint(localtime(&(fileStat.st_ctime)));
 }
 
