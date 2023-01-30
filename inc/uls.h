@@ -3,6 +3,9 @@
 
 #include "libmx.h"
 
+#include <time.h>
+#include <pwd.h>
+#include <grp.h>
 #include <dirent.h>
 #include <errno.h>
 #include <string.h>
@@ -22,7 +25,16 @@ void mx_clear_list(t_list** list, bool is_clear);
 void mx_print_incorrect(t_list *list);
 
 void sort_alpha(t_list *lst);
-void _l_func(char **argv);
+void _l_func(t_list *list);
+
+
+void print_permission(char *name);
+void print_linked_links(char *name);
+void print_owners(char *name);
+void print_file_size(char *name);
+void print_file_time(char *name);
+
+char *convert_time(time_t t);
 
 typedef struct s_dir {
     void *data;

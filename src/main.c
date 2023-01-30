@@ -8,7 +8,8 @@ int main(int argc, char **argv) {
 
 	for (int i = 1; i < argc; i++) {
 		if (argv[i][0] == '-' && argv[i][1] == 'l') {
-			_l_func(argv);
+			//_l_func(argv);
+			uls(".", 0, 1);
 		}
 		else if (argv[i][0] == '-' && argv[i][1] != 'l') {
 			mx_printerr("uls: illegal option -- ");
