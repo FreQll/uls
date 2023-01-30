@@ -60,6 +60,7 @@ void uls(const char *dir,int op_a,int op_l)
 
 void _l_func(char **argv) {
 	struct stat fileStat;
+	stat(argv[2], &fileStat);
     // if(stat(argv[1], &fileStat) < 0)    
     //     return 1;
 
