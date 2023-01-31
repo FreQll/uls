@@ -55,7 +55,7 @@ void uls(const char *dir,int op_a,int op_l)
 	///////////////
 	if (op_l) {
 		_l_func(list);
-		//exit(0);
+		exit(0);
 	}
 
 	mx_print_list(list);
@@ -67,24 +67,78 @@ void uls(const char *dir,int op_a,int op_l)
 void _l_func(t_list *list) {
 	if (list) {
 		t_list *temp = list;
+		t_list *temp_blocks = list;
+
+		while (temp_blocks) {
+			if (temp_blocks->next == NULL) {
+				break;
+			}
+			temp_blocks = temp_blocks->next;
+		}
+
+		mx_printstr("total ");
+		print_blocks(temp_blocks->data);
 
 		while (temp) {
 			print_permission(temp->data);
-			mx_printstr("  ");
+			mx_printstr(" ");
 			print_linked_links(temp->data);
 			// if (temp->next != NULL) {
             // 	mx_printstr("  ");
         	// }
-			mx_printstr("\t");
+			mx_printstr(" ");
 			print_owners(temp->data);
-			mx_printstr("\t");
+			mx_printstr(" ");
 			print_file_size(temp->data);
-			mx_printstr("\t");
+			mx_printstr(" ");
 			print_file_time(temp->data);
-			mx_printstr("\t");
+			mx_printstr(" ");
 			mx_printstr(temp->data);
 			mx_printchar('\n');
-        temp = temp->next;
+        	temp = temp->next;
+		}
+	}
+}
+
+void _l_func_dir(t_list *list, char *dir) {
+	if (list) {
+		t_list *temp = list;
+
+		t_list *temp_blocks = list;
+
+		while (temp_blocks) {
+			if (temp_blocks->next == NULL) {
+				break;
+			}
+			temp_blocks = temp_blocks->next;
+		}
+
+		mx_printstr("total ");
+		print_blocks(temp_blocks->data);
+
+		while (temp) {
+			char *temp_path = mx_strnew(mx_strlen(dir) + mx_strlen(temp->data) + 1);
+
+			mx_strcat(temp_path, dir);    
+			mx_strcat(temp_path, "/");   
+			mx_strcat(temp_path, temp->data);
+
+			// mx_printstr("total ");
+			// mx_printin
+			
+			print_permission(temp_path);
+			mx_printstr(" ");
+			print_linked_links(temp_path);
+			mx_printstr(" ");
+			print_owners(temp_path);
+			mx_printstr(" ");
+			print_file_size(temp_path);
+			mx_printstr(" ");
+			print_file_time(temp_path);
+			mx_printstr(" ");
+			mx_printstr(temp->data);
+			mx_printchar('\n');
+        	temp = temp->next;
 		}
 	}
 }

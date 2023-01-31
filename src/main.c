@@ -15,6 +15,7 @@ int main(int argc, char **argv) {
 		if (argv[i][0] == '-' && argv[i][1] == 'l' && argc == 2) {
 			//_l_func(argv);
 			uls(".", 0, 1);
+			return 0;
 		}
 		else if (argv[i][0] == '-' && argv[i][1] != 'l') {
 			mx_printerr("uls: illegal option -- ");
@@ -78,7 +79,20 @@ int main(int argc, char **argv) {
 		mx_print_incorrect(incorrect_values);
 	}
 
-	if (file_count > 0) {
+	if (flag != 0) {
+		// for (int i = 1; i < argc; i++) {
+			
+		// 	if (i == flag) continue;
+		// 	mx_printstr("\n!-l for ");
+		// 	mx_printstr(argv[i]);
+		// 	mx_printstr("\n");
+		// 	uls(argv[i], 0, 1);
+		// }
+
+		_l_func(list_files);
+	}
+
+	if (file_count > 0 && flag == 0) {
 		sort_alpha(list_files);
 		mx_print_list(list_files);
 		mx_printstr("\n\n");
@@ -95,14 +109,7 @@ int main(int argc, char **argv) {
 					list_dir[j + 1] = dir_temp;
 					continue;
 			}
-			// mx_printstr(list_dir[j].data);
-			// 	mx_printstr(" -> ");
-			// 	mx_printstr(list_dir[j + 1].data);
-			// 	mx_printchar('\t');
-			// 	mx_printint(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data));
-			// 	mx_printstr("\n\n");
             if(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
-				//mx_printstr("\t swap\n\n");
                 dir_temp.data = list_dir[j].data;
 				dir_temp.list = list_dir[j].list;
                 list_dir[j] = list_dir[j + 1];
@@ -110,15 +117,30 @@ int main(int argc, char **argv) {
             }
         }
 	}
+
+	//for l flag
 	
-	for (int i = 0; i < argc - 1; i++) {
-		if (list_dir[i].list != NULL) {
-			if (i != 0) mx_printstr("\n");
+	
+	if (flag == 0) {
+		for (int i = 0; i < argc - 1; i++) {
+			if (list_dir[i].list != NULL) {
+				if (i != 0) mx_printstr("\n");
+				mx_printstr(list_dir[i].data);
+				mx_printstr(":\n");
+				sort_alpha(list_dir[i].list);
+				mx_print_list(list_dir[i].list);
+				mx_printchar('\n');
+			}
+		}
+	}
+	else {
+		if (file_count > 0) mx_printchar('\n');
+		for (int i = 0; i < dir_count; i++) {
 			mx_printstr(list_dir[i].data);
 			mx_printstr(":\n");
 			sort_alpha(list_dir[i].list);
-			mx_print_list(list_dir[i].list);
-			mx_printchar('\n');
+			_l_func_dir(list_dir[i].list, list_dir[i].data);
+			if (i + 1 != dir_count) mx_printchar('\n');
 		}
 	}
 

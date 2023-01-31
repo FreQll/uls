@@ -26,7 +26,9 @@ void mx_print_incorrect(t_list *list);
 
 void sort_alpha(t_list *lst);
 void _l_func(t_list *list);
-
+void _l_func_dir(t_list *list, char *dir);
+void print_blocks(char *name);
+int get_blocks(char *name);
 
 void print_permission(char *name);
 void print_linked_links(char *name);

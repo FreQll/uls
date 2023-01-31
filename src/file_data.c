@@ -64,18 +64,6 @@ void print_permission(char *name) {
     }
     else mx_printstr("-");
 
-    // printf( (S_ISDIR(fileStat.st_mode)) ? "d" : "-");
-    // printf( (fileStat.st_mode & S_IRUSR) ? "r" : "-");
-    // printf( (fileStat.st_mode & S_IWUSR) ? "w" : "-");
-    // printf( (fileStat.st_mode & S_IXUSR) ? "x" : "-");
-    // printf( (fileStat.st_mode & S_IRGRP) ? "r" : "-");
-    // printf( (fileStat.st_mode & S_IWGRP) ? "w" : "-");
-    // printf( (fileStat.st_mode & S_IXGRP) ? "x" : "-");
-    // printf( (fileStat.st_mode & S_IROTH) ? "r" : "-");
-    // printf( (fileStat.st_mode & S_IWOTH) ? "w" : "-");
-    // printf( (fileStat.st_mode & S_IXOTH) ? "x" : "-");
-    //printf("\n");
-
     // printf("The file %s a symbolic link\n", (S_ISLNK(fileStat.st_mode)) ? "is" : "is not");
 }
 
@@ -92,7 +80,7 @@ void print_owners(char *name) {
     struct group  *gr = getgrgid(fileStat.st_gid);
 
     mx_printstr(pw->pw_name);
-    mx_printstr("  ");
+    mx_printstr(" ");
     mx_printstr(gr->gr_name);
 }
 
@@ -102,10 +90,23 @@ void print_file_size(char *name) {
     mx_printint(fileStat.st_size);
 }
 
+void print_blocks(char *name) {
+    struct stat fileStat;
+	stat(name, &fileStat);
+    mx_printint(fileStat.st_blocks);
+    mx_printstr("\n");
+}
+
+int get_blocks(char *name) {
+    struct stat fileStat;
+	stat(name, &fileStat);
+    return fileStat.st_blocks;
+}
+
 void print_file_time(char *name) {
     struct stat fileStat;
 	stat(name, &fileStat);
-    mx_printstr(convert_time(fileStat.st_ctime));
+    mx_printstr(convert_time(fileStat.st_mtime));
     //mx_printint(localtime(&(fileStat.st_ctime)));
 }
 
