@@ -28,8 +28,7 @@ int main(int argc, char **argv) {
 	t_list *list_files = NULL;
 	t_dir list_dir[argc - 1];
 
-	for (int i = 0; i < argc - 1; i++)
-	{
+	for (int i = 0; i < argc - 1; i++) {
 		list_dir[i].list = NULL;
 	}
 
@@ -39,7 +38,6 @@ int main(int argc, char **argv) {
 	int dir_count = 0;
 
 	for (int i = 1; argv[i] != NULL; i++) {	
-			
 		char *name = argv[i];
 		errno = 0;
 		DIR *dir = opendir(argv[i]);
@@ -86,25 +84,7 @@ int main(int argc, char **argv) {
 		mx_printstr("\n\n");
 	}
 
-	t_dir dir_temp;
-	for (int i = 0; i < dir_count; i++) {
-		for (int j = 0; j < dir_count - 1; j++) {
-			if (mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) == 0 
-				&& mx_strcmp(list_dir[j].data, list_dir[j + 1].data) < 0) {
-					dir_temp.data = list_dir[j].data;
-					dir_temp.list = list_dir[j].list;
-					list_dir[j] = list_dir[j + 1];
-					list_dir[j + 1] = dir_temp;
-					continue;
-			}
-            if(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
-                dir_temp.data = list_dir[j].data;
-				dir_temp.list = list_dir[j].list;
-                list_dir[j] = list_dir[j + 1];
-                list_dir[j + 1] = dir_temp;
-            }
-        }
-	}
+	sort_directories(dir_count, list_dir);
 
 	//for l flag
 	if (flag == 0) {

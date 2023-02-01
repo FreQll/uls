@@ -27,6 +27,7 @@ void mx_print_incorrect(t_list *list);
 void sort_list_by_alphabet(t_list *lst);
 void flag_l(t_list *list, char *dir);
 //void _l_func_dir(t_list *list, char *dir);
+
 void print_blocks(char *name);
 int get_blocks(char *name);
 
@@ -48,5 +49,6 @@ typedef struct s_dir {
     struct s_list *list;
 }              t_dir;
 
+void sort_directories(int dir_count, t_dir *list_dir);
 
 #endif

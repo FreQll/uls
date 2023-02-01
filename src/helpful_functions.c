@@ -19,3 +19,25 @@ int get_num_digits(int n) {
     }  
     return count;
 }
+
+void sort_directories(int dir_count, t_dir *list_dir) {
+    t_dir dir_temp;
+	for (int i = 0; i < dir_count; i++) {
+		for (int j = 0; j < dir_count - 1; j++) {
+			if (mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) == 0 
+				&& mx_strcmp(list_dir[j].data, list_dir[j + 1].data) < 0) {
+					dir_temp.data = list_dir[j].data;
+					dir_temp.list = list_dir[j].list;
+					list_dir[j] = list_dir[j + 1];
+					list_dir[j + 1] = dir_temp;
+					continue;
+			}
+            if(mx_strcasecmp(list_dir[j].data, list_dir[j + 1].data) > 0) {
+                dir_temp.data = list_dir[j].data;
+				dir_temp.list = list_dir[j].list;
+                list_dir[j] = list_dir[j + 1];
+                list_dir[j + 1] = dir_temp;
+            }
+        }
+	}
+}
