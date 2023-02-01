@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 			mx_printerr("uls: illegal option -- ");
 			mx_printerr(&argv[i][1]);
 			mx_printerr("\nusage: uls [-l] [file ...]\n");
-			exit(0);
+			return -1;
 		}
 	}
 
@@ -77,11 +77,11 @@ int main(int argc, char **argv) {
 	}
 
 	if (flag != 0) {
-		_l_func(list_files);
+		flag_l(list_files, NULL);
 	}
 
 	if (file_count > 0 && flag == 0) {
-		sort_alpha(list_files);
+		sort_list_by_alphabet(list_files);
 		mx_print_list(list_files);
 		mx_printstr("\n\n");
 	}
@@ -107,14 +107,12 @@ int main(int argc, char **argv) {
 	}
 
 	//for l flag
-	
-	
 	if (flag == 0) {
 		for (int i = 0; i < dir_count; i++) {
 			if (i != 0) mx_printstr("\n");
 			mx_printstr(list_dir[i].data);
 			mx_printstr(":\n");
-			sort_alpha(list_dir[i].list);
+			sort_list_by_alphabet(list_dir[i].list);
 			mx_print_list(list_dir[i].list);
 			if (list_dir[i].list != NULL) mx_printchar('\n');
 		}
@@ -124,8 +122,8 @@ int main(int argc, char **argv) {
 		for (int i = 0; i < dir_count; i++) {
 			mx_printstr(list_dir[i].data);
 			mx_printstr(":\n");
-			sort_alpha(list_dir[i].list);
-			_l_func_dir(list_dir[i].list, list_dir[i].data);
+			sort_list_by_alphabet(list_dir[i].list);
+			flag_l(list_dir[i].list, list_dir[i].data);
 			if (i + 1 != dir_count) mx_printchar('\n');
 		}
 	}

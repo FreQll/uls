@@ -24,9 +24,9 @@ void mx_print_list(t_list *list);
 void mx_clear_list(t_list** list, bool is_clear);
 void mx_print_incorrect(t_list *list);
 
-void sort_alpha(t_list *lst);
-void _l_func(t_list *list);
-void _l_func_dir(t_list *list, char *dir);
+void sort_list_by_alphabet(t_list *lst);
+void flag_l(t_list *list, char *dir);
+//void _l_func_dir(t_list *list, char *dir);
 void print_blocks(char *name);
 int get_blocks(char *name);
 
