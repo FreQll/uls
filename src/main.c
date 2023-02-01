@@ -123,13 +123,13 @@ int main(int argc, char **argv) {
 	
 	if (flag == 0) {
 		for (int i = 0; i < argc - 1; i++) {
-			if (list_dir[i].list != NULL) {
+			if (list_dir[i].data != NULL) {
 				if (i != 0) mx_printstr("\n");
 				mx_printstr(list_dir[i].data);
 				mx_printstr(":\n");
 				sort_alpha(list_dir[i].list);
 				mx_print_list(list_dir[i].list);
-				mx_printchar('\n');
+				if (list_dir[i].list != NULL) mx_printchar('\n');
 			}
 		}
 	}
