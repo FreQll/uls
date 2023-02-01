@@ -13,7 +13,6 @@ int main(int argc, char **argv) {
 			flag = i;
 		}
 		if (argv[i][0] == '-' && argv[i][1] == 'l' && argc == 2) {
-			//_l_func(argv);
 			uls(".", 0, 1);
 			return 0;
 		}
@@ -58,8 +57,6 @@ int main(int argc, char **argv) {
 		else { //for dirs
 			struct dirent *entry;
 			list_dir[temp].data = name;
-			//
-			//if (i != 1) mx_printstr("\n");
 
 			while ((entry = readdir(dir)) != NULL) {
 				if (entry->d_name[0] == '.')
@@ -80,15 +77,6 @@ int main(int argc, char **argv) {
 	}
 
 	if (flag != 0) {
-		// for (int i = 1; i < argc; i++) {
-			
-		// 	if (i == flag) continue;
-		// 	mx_printstr("\n!-l for ");
-		// 	mx_printstr(argv[i]);
-		// 	mx_printstr("\n");
-		// 	uls(argv[i], 0, 1);
-		// }
-
 		_l_func(list_files);
 	}
 
@@ -122,15 +110,13 @@ int main(int argc, char **argv) {
 	
 	
 	if (flag == 0) {
-		for (int i = 0; i < argc - 1; i++) {
-			if (list_dir[i].data != NULL) {
-				if (i != 0) mx_printstr("\n");
-				mx_printstr(list_dir[i].data);
-				mx_printstr(":\n");
-				sort_alpha(list_dir[i].list);
-				mx_print_list(list_dir[i].list);
-				if (list_dir[i].list != NULL) mx_printchar('\n');
-			}
+		for (int i = 0; i < dir_count; i++) {
+			if (i != 0) mx_printstr("\n");
+			mx_printstr(list_dir[i].data);
+			mx_printstr(":\n");
+			sort_alpha(list_dir[i].list);
+			mx_print_list(list_dir[i].list);
+			if (list_dir[i].list != NULL) mx_printchar('\n');
 		}
 	}
 	else {
@@ -149,34 +135,6 @@ int main(int argc, char **argv) {
 	mx_clear_list(&list_files, false);
 	for (int i = 0; i < argc - 1; i++)
 		mx_clear_list(&list_dir[i].list, true);
-
-		//add_cat(argv);
-		
-		
-
-
-		//CREATIVE
-		/*
-		if (argv[1][0] == '-')
-		{
-
-			//Checking if option is passed
-			//Options supporting: a, l
-			int op_a = 0, op_l = 0;
-			char *p = (char*)(argv[1] + 1);
-			while(*p){
-				if(*p == 'a') op_a = 1;
-				else if(*p == 'l') op_l = 1;
-				else{
-					perror("Option not available");
-					exit(EXIT_FAILURE);
-				}
-				p++;
-			}
-			uls(".",op_a,op_l);
-			
-		}*/
 	
-	//}
 	return 0;
 }
