@@ -67,29 +67,28 @@ void uls(const char *dir,int op_a,int op_l)
 void _l_func(t_list *list) {
 	if (list) {
 		t_list *temp = list;
-		t_list *temp_blocks = list;
 
-		while (temp_blocks) {
-			if (temp_blocks->next == NULL) {
-				break;
+		t_list *size = list;
+		int max = 0;
+		while (size) {
+			if (get_file_size(size->data) > max) {
+				max = get_file_size(size->data);
 			}
-			temp_blocks = temp_blocks->next;
+			size = size->next;
 		}
 
-		mx_printstr("total ");
-		print_blocks(temp_blocks->data);
+		//mx_printint(max);
+		mx_clear_list(&size, false);
+		int count = get_num_digits(max); 
 
 		while (temp) {
 			print_permission(temp->data);
 			mx_printstr(" ");
 			print_linked_links(temp->data);
-			// if (temp->next != NULL) {
-            // 	mx_printstr("  ");
-        	// }
 			mx_printstr(" ");
 			print_owners(temp->data);
 			mx_printstr(" ");
-			print_file_size(temp->data);
+			print_file_size(temp->data, count);
 			mx_printstr(" ");
 			print_file_time(temp->data);
 			mx_printstr(" ");
@@ -113,26 +112,31 @@ void _l_func_dir(t_list *list, char *dir) {
 			temp_blocks = temp_blocks->next;
 		}
 
+		t_list *size = list;
+		int max = 0;
+		while (size) {
+			char *temp_path = mx_strcat_directory(dir, size->data);
+			if (get_file_size(temp_path) > max) {
+				max = get_file_size(temp_path);
+			}
+			size = size->next;
+		}
+		mx_clear_list(&size, false);
+		int count = get_num_digits(max); 
+
 		mx_printstr("total ");
 		print_blocks(temp_blocks->data);
 
 		while (temp) {
-			char *temp_path = mx_strnew(mx_strlen(dir) + mx_strlen(temp->data) + 1);
+			char *temp_path = mx_strcat_directory(dir, temp->data);
 
-			mx_strcat(temp_path, dir);    
-			mx_strcat(temp_path, "/");   
-			mx_strcat(temp_path, temp->data);
-
-			// mx_printstr("total ");
-			// mx_printin
-			
 			print_permission(temp_path);
 			mx_printstr(" ");
 			print_linked_links(temp_path);
 			mx_printstr(" ");
 			print_owners(temp_path);
 			mx_printstr(" ");
-			print_file_size(temp_path);
+			print_file_size(temp_path, count);
 			mx_printstr(" ");
 			print_file_time(temp_path);
 			mx_printstr(" ");

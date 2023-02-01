@@ -84,10 +84,24 @@ void print_owners(char *name) {
     mx_printstr(gr->gr_name);
 }
 
-void print_file_size(char *name) {
+void print_file_size(char *name, int spaces) {
+    int size = get_file_size(name);
+
+    if (get_num_digits(size) < spaces) {
+        for (int i = 0; i < spaces - get_num_digits(size); i++) {
+            mx_printchar(' ');
+        }
+    }
+    
+    mx_printint(size);
+}
+
+int get_file_size(char *name) {
     struct stat fileStat;
 	stat(name, &fileStat);
-    mx_printint(fileStat.st_size);
+    int size = fileStat.st_size;
+
+    return size;
 }
 
 void print_blocks(char *name) {
@@ -136,4 +150,24 @@ char *convert_time(time_t t) {
 	mx_del_strarr(&parts);
 	//free(time_str);
 	return result;
+}
+
+char *mx_strcat_directory(char *dir, char *file) {
+    char *temp_path = mx_strnew(mx_strlen(dir) + mx_strlen(file) + 1);
+
+    mx_strcat(temp_path, dir);    
+    mx_strcat(temp_path, "/");   
+    mx_strcat(temp_path, file);
+
+    return temp_path;
+}
+
+int get_num_digits(int n) {
+    int count = 0;
+    if (n == 0) return 1;
+    while(n != 0) {  
+        n = n/10;  
+        count++;  
+    }  
+    return count;
 }

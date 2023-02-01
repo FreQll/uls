@@ -33,8 +33,13 @@ int get_blocks(char *name);
 void print_permission(char *name);
 void print_linked_links(char *name);
 void print_owners(char *name);
-void print_file_size(char *name);
+void print_file_size(char *name, int spaces);
 void print_file_time(char *name);
+
+int get_num_digits(int n);
+char *mx_strcat_directory(char *dir, char *file);
+
+int get_file_size(char *name);
 
 char *convert_time(time_t t);
 
