@@ -3,11 +3,21 @@
 void mx_print_list(t_list *list) {
     if (!list) return;
 
+    bool cat_e = false;
+
+    if(isatty(1))
+		cat_e = false;
+	else
+		cat_e = true;
+
     t_list *temp = list;
     while (temp) {
         mx_printstr(temp->data);
-        if (temp->next != NULL) {
+        if (temp->next != NULL && !cat_e) {
             mx_printstr("  ");
+        }
+        else if (temp->next != NULL && cat_e) {
+            mx_printchar('\n');
         }
         temp = temp->next;
     }
