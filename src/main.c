@@ -27,15 +27,14 @@ int main(int argc, char **argv) {
 	t_list *incorrect_values = NULL;
 	t_list *list_files = NULL;
 	t_dir list_dir[argc - 1];
-
-	for (int i = 0; i < argc - 1; i++) {
-		list_dir[i].list = NULL;
-	}
-
 	int temp = 0;
 	int incorrect_count = 0;
 	int file_count = 0;
 	int dir_count = 0;
+
+	for (int i = 0; i < argc - 1; i++) {
+		list_dir[i].list = NULL;
+	}
 
 	for (int i = 1; argv[i] != NULL; i++) {	
 		char *name = argv[i];
@@ -81,7 +80,8 @@ int main(int argc, char **argv) {
 	if (file_count > 0 && flag == 0) {
 		sort_list_by_alphabet(list_files);
 		mx_print_list(list_files);
-		mx_printstr("\n\n");
+		if (dir_count > 0) mx_printstr("\n\n");
+		else mx_printchar('\n');
 	}
 
 	sort_directories(dir_count, list_dir);
