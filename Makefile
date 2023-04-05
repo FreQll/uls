@@ -1,6 +1,6 @@
 NAME	=	uls
 
-CFLG	=	-std=c11 $(addprefix -W, all extra pedantic) -g
+CFLG	=	-std=c11 -g
 
 SRC_DIR	= src
 INC_DIR	= inc

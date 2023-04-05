@@ -1,6 +1,7 @@
 char *mx_strcpy(char *dst, const char *src) {
     int i = 0;
-    for (; *src; i++) *dst++ = *src++;
+    const char *tSrc = src;
+    for (; *tSrc; i++) *dst++ = *tSrc++;
 
     for (; *dst; i++) *dst++ = 0;
 
